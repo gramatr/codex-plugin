@@ -1,0 +1,20 @@
+{
+  "name": "gramatr-private",
+  "interface": {
+    "displayName": "grāmatr Private"
+  },
+  "plugins": [
+    {
+      "name": "gramatr",
+      "source": {
+        "source": "local",
+        "path": "./plugins/gramatr"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

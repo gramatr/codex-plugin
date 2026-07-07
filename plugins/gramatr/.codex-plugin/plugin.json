@@ -1,0 +1,41 @@
+{
+  "name": "gramatr",
+  "version": "0.28.1",
+  "description": "Real-time intelligent context engineering that makes every prompt cheaper, faster, and context-aware.",
+  "author": {
+    "name": "gramatr",
+    "email": "support@gramatr.com",
+    "url": "https://gramatr.com"
+  },
+  "homepage": "https://gramatr.com",
+  "repository": "https://github.com/gramatr/codex-plugin",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "intelligence",
+    "memory",
+    "routing",
+    "context",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "grāmatr",
+    "shortDescription": "Real-time intelligent context engineering that makes every prompt cheaper, faster, and context-aware.",
+    "longDescription": "grāmatr℠ is a patent-pending real-time intelligent context engineering layer that sits between you and every AI model you use. Every prompt runs through a multi-head classification pipeline that pre-routes the request, assembles behavioral directives and quality criteria, and pulls relevant context from past work — so the model skips orientation overhead and starts working immediately. It replaces the tens-of-thousands-token system prompt you'd otherwise hand-maintain, and the effect compounds the longer you work. Because the same contract — directives plus quality gates — runs on every prompt, behavior stays consistent and auditable across sessions, tools, and teammates: your AI acts the same on session 200 as on session 1, so you spend less time re-explaining and more time shipping. Works across Claude, ChatGPT, Cursor, Codex, Gemini, and VS Code.",
+    "developerName": "gramatr",
+    "category": "Productivity",
+    "capabilities": [
+      "Memory",
+      "Routing",
+      "MCP"
+    ],
+    "websiteURL": "https://gramatr.com",
+    "privacyPolicyURL": "https://gramatr.com/privacy/",
+    "termsOfServiceURL": "https://gramatr.com/terms/",
+    "defaultPrompt": [
+      "What did we work on last session?",
+      "Remember my preferences for this project.",
+      "Route this task through grāmatr."
+    ]
+  }
+}
