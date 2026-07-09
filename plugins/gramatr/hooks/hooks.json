@@ -1,0 +1,52 @@
+{
+  "description": "grāmatr Codex lifecycle hooks. These are bundled with the private Codex plugin so users do not have to hand-maintain ~/.codex/hooks.json.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gramatr-hook session-start --codex",
+            "statusMessage": "Loading grāmatr session context",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gramatr-hook user-prompt-submit --codex",
+            "statusMessage": "Routing request through grāmatr",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gramatr-hook session-end --codex",
+            "statusMessage": "Saving grāmatr session state",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gramatr-hook stop --codex",
+            "statusMessage": "Submitting grāmatr classification feedback",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
