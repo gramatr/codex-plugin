@@ -1,49 +1,152 @@
 {
-  "description": "grāmatr Codex lifecycle hooks. These are bundled with the private Codex plugin so users do not have to hand-maintain ~/.codex/hooks.json.",
+  "description": "grāmatr Codex lifecycle hooks, compiled from contracts/hooks/definitions/*.yaml (epic #5281). Bundled with the private Codex plugin so users do not have to hand-maintain ~/.codex/hooks.json.",
   "hooks": {
-    "SessionStart": [
+    "PreToolUse": [
       {
-        "matcher": "startup|resume",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "gramatr-hook session-start --codex",
-            "statusMessage": "Loading grāmatr session context",
-            "timeout": 15
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/git-gate.js",
+            "timeout": 5,
+            "async": false
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/input-validator.js",
+            "timeout": 5,
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/git-commit-handoff.js",
+            "timeout": 8,
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/bash-output-scan.js",
+            "timeout": 8,
+            "async": false
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:gramatr:gramatr",
+            "tool": "auto_save_handoff",
+            "input": {
+              "client_session_id": "${session_id}",
+              "client_type": "codex",
+              "reason": "${trigger}",
+              "hook_response": true
+            },
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/project-init.js",
+            "timeout": 5,
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/init-identity.js --codex",
+            "timeout": 10,
+            "async": false
           }
         ]
       }
     ],
     "UserPromptSubmit": [
       {
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "gramatr-hook user-prompt-submit --codex",
-            "statusMessage": "Routing request through grāmatr",
-            "timeout": 15
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/compact-advisor.js",
+            "timeout": 5,
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/ups-route.js",
+            "timeout": 12,
+            "async": false
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/subagent-route.js",
+            "timeout": 5,
+            "async": false
           }
         ]
       }
     ],
     "Stop": [
       {
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "gramatr-hook session-end --codex",
-            "statusMessage": "Saving grāmatr session state",
-            "timeout": 15
-          }
-        ]
-      },
-      {
-        "hooks": [
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/classification-feedback.js",
+            "timeout": 8,
+            "async": false
+          },
           {
             "type": "command",
-            "command": "gramatr-hook stop --codex",
-            "statusMessage": "Submitting grāmatr classification feedback",
-            "timeout": 10
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/compliance-telemetry.js",
+            "timeout": 5,
+            "async": false
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/session-end-seal.js",
+            "timeout": 10,
+            "async": false
+          },
+          {
+            "type": "mcp_tool",
+            "server": "plugin:gramatr:gramatr",
+            "tool": "auto_save_handoff",
+            "input": {
+              "client_session_id": "${session_id}",
+              "client_type": "codex",
+              "reason": "${reason}",
+              "hook_response": true
+            },
+            "timeout": 20
           }
         ]
       }
