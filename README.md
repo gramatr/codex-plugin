@@ -48,4 +48,4 @@ The mirror is generated automatically from the [gramatr monorepo](https://github
 
 ## Version
 
-0.35.3
+0.35.4
