@@ -95,7 +95,7 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/ups-route.js",
-            "timeout": 12,
+            "timeout": 65,
             "async": false
           }
         ]
