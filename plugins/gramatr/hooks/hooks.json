@@ -78,6 +78,12 @@
             "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/init-identity.js --codex",
             "timeout": 10,
             "async": false
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/codex-session-contract.js",
+            "timeout": 5,
+            "async": false
           }
         ]
       }
