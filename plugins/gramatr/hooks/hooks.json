@@ -34,12 +34,6 @@
             "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/git-commit-handoff.js",
             "timeout": 8,
             "async": false
-          },
-          {
-            "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/bash-output-scan.js",
-            "timeout": 8,
-            "async": false
           }
         ]
       }
