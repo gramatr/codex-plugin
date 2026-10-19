@@ -43,16 +43,10 @@
         "matcher": "*",
         "hooks": [
           {
-            "type": "mcp_tool",
-            "server": "plugin:gramatr:gramatr",
-            "tool": "auto_save_handoff",
-            "input": {
-              "client_session_id": "${session_id}",
-              "client_type": "codex",
-              "reason": "${trigger}",
-              "hook_response": true
-            },
-            "timeout": 20
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/precompact-seal.js",
+            "timeout": 10,
+            "async": false
           }
         ]
       }
@@ -135,18 +129,6 @@
             "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/session-end-seal.js",
             "timeout": 10,
             "async": false
-          },
-          {
-            "type": "mcp_tool",
-            "server": "plugin:gramatr:gramatr",
-            "tool": "auto_save_handoff",
-            "input": {
-              "client_session_id": "${session_id}",
-              "client_type": "codex",
-              "reason": "${reason}",
-              "hook_response": true
-            },
-            "timeout": 20
           }
         ]
       }
