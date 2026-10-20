@@ -23,6 +23,17 @@
             "async": false
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/bin/project-write-guard.js",
+            "timeout": 5,
+            "async": false
+          }
+        ]
       }
     ],
     "PostToolUse": [
